@@ -1,0 +1,126 @@
+# coding: utf-8
+
+# # Capstone Project - Coffee Shop Decision (Week 2)
+# ### Applied Data Science Capstone by IBM/Coursera
+
+# ## Table of contents
+# * [Introduction: Business Problem](#Background #Problem ##Interest)
+# * [Data](#data)
+# * [Methodology](#methodology)
+# * [Analysis](#analysis)
+# * [Results and Discussion](#results)
+# * [Conclusion](#conclusion)
+
+# ## Introduction: Business Problem <a name="introduction"></a>
+
+# ### 1, Background
+
+# Toronto is an international metropolis with a population of more than 6 million and is also a Canadian economic, cultural and tourist destination. In Toronto, investing in a coffee shop should be a good business choice. 
+# Despite of the quality of your coffee, whether a coffee shop can be profitable depends mainly on whether there are enough potential customers. The number of potential customers is related to whether the coffee shop is located at a densely active crowd zone, such as parks, tourist attractions, gym, mall, etc. .Those zones generally have a large flow of people, and coffee shops will have better profit potential.
+
+# ### 2 , Problem
+
+# This project will give suggestion on whether a location is suitable for investing in a coffee shop, and the answer would be yes/no. 
+# The decision will based on the analyze the venues near the coffee shop suggesting that a good coffee shop location is mainly related to the nearby venues.  
+# From Foursquare website , we can acquire the number of customers and popularity data of existing cafes. Then found the relationship between the number of customers in the coffee shop and the VENUE type/quantity near the coffee shop. Finally , I will build a decision model with the highest accuracy through the classification algorithm.
+
+# ## Data <a name="data"></a>
+
+# ### 1, Data Source
+
+# 1.1, Toronto Neighborhood
+#     Postcode¡¢Borough and Neighborhood data of Toronto can be found in WIKI website. From "https://cocl.us/Geospatial_data" we can acquire Latitude and Longitude data of each neighborhood. 
+     Columns : Index | Postcode | Neighborhood | Latitude | Longtitude
+ 
+# 1.2, Venue Dataset
+#    Foursquare provide Venue dataset , we will use Venue Name, Venue category and Venue location data to group and compare venues in a neighborhood. Foursquare also provide detail data for each Coffee Shop , we will use it to analyze the business situation with data of Venue.stats(user checkin Count) 
+#     Columns : 
+#        Venue| Category(CoffeeShop) | Status(checkinsCnt) |Latitude|Longtitude
+
+# ### 2, Data Processing
+
+# 2.1, Prepare Toronto neighborhood Dataset
+#  Combine Toronto WIKI neighborhood data and geospatial data to build a dataset with attribution of each neighborhood and location.
+
+#  2.2, Prepare Coffee shop Dataset 
+#   For each neighborhood , request venue data from Foursquare . Filter the venue with category type of Coffee shop and get 100 popular coffee shop.
+#   Columns: 
+# CoffeeShop|Neighborhood|Category|checkinsCnt|Latitude|Longtitude
+
+#  2.3, Prepare Venue analyze Dataset of each coffee shop
+#   For each coffee shop , request nearby venue data from Foursquare . Count different types of category near the coffee shop. Nearby venue will be selected by a radium of distance.
+#   Columns : 
+#      CoffeeShop|Neighborhood|Radium(2kilo)|Nearby Venue|Nearby Venue Cnt|Ranking
+
+# ### 3, Feature Selection
+
+#  Select top 10 ranking "Venue Type" as features to build decision model. The top 10 venue type will be calculated from Venue analyze Dataset with sum of count number.
+
+# ### 4, Classification of Coffee shop Decision
+
+# Eventually, the decision will be YES/NO of a chosen location to open coffee shop. I will use the "mean of checkinCount" of a coffee venue to divide YES/NO.
+# GOOD  INVESTMENT = checkinCount>=mean(checkinCount)
+#  BAD  INVESTMENT = checkinCount<mean(checkinCount)
+
+
+# ## Methodology <a name="Methodology"></a>
+
+# ### 1, Step 1 : Toronto Neighborhood and Popular CoffeeShop
+
+# Quantify whether a coffee shop is popular with the mothed that the sum of customer is greater than the median number will be YES, otherwise NO. 
+# 1.1 Toronto Neighborhood with location
+# 1.2 List CoffeeShop of Each Neighborhood
+# 1.3 Index Popular CoffeeShop with checkinCount
+# 1.4 List Top X Popular CoffeeShop and Top X Neighborhood with coffeeshops
+
+# ### 2, Step 2 : Analyze Nearby Venues of Popular Coffee Shop
+# Analyze the VENUE around the coffee shop with the largest number of customers, find the VENUE category with the highest count number, and select the VENUE category with higher correlation as the features to decision model.
+# 2.1 List Top X Popular CoffeeShop
+# 2.2 Nearby Venue of CoffeeShop with circle radium X Kilo
+# 2.3 Count Venue by Venue Group
+# 2.4 Ranking Venue with sum of venue count 
+
+# ### 3, Step 3 : Feature Selection 
+# 3.1 List Top 5 Venue types as Feature of Decision Model. 
+
+# ### 4, Step 4 : CoffeeShop dataset for Model Training 
+# Prepare Dataset of CoffeeShop of XXX CoffeeShops choosen from coffeeshop list . Combine with location data, states data, nearby venue data. Use the dataset as case input for model training and evaluation.
+# 4.1 Choosen XXX CoffeeShops half above mean(checkinCount) and half below.
+# 4.2 Join with neighborhood data
+# 4.3 Join with Location Data
+# 4.4 Get Nearby venue data of each CoffeeShops
+# 4.5 Processing Data 
+
+# ### 5, Step 5 : Decision Model Selection
+# Training Decision Model. Perfrom model evaluation with different meansure. Then , choosing high performance classification models  KNN, SVM and Decision Tree models would by used.
+# 5.1 Training each Decision Model.
+# 5.2 Evaluation eah Deision Model.
+# 5.3 Choosen high performance model.
+# 5.4 Test decision model.
+
+
+
+
+# ## Results <a name="Results"></a>
+
+# ### Results section where you discuss the results
+
+# ## Discuss <a name="Discuss"></a>
+
+# ### Discussion section where you discuss any observations you noted and any recommendations you can make based on the results
+
+# ### 1, Find Potential Neighborhood 
+# ### 2, Recommendation location
+# ### 3, Evaluation Location
+
+# ## Conclusion <a name="Conclusion"></a>
+
+# ### Conclusion section where you conclude the report
+
+
+
+
+
+
+
+
